@@ -1,6 +1,6 @@
 const ul = document.querySelector('ul');
-const trash = document.querySelector('.delete');
 const add = document.querySelector('.add');
+const search = document.querySelector('.search input');
 
 const generateTemplate = todo => {
     const template = `
@@ -20,3 +20,29 @@ add.addEventListener('submit', e=> {
     add.reset();
 })
 
+
+ul.addEventListener('click', e=> {
+    if(e.target.classList.contains('delete')) {
+        e.target.parentElement.remove();
+    }
+});
+
+
+
+
+
+//keyup
+const filterTodos = (term) => {
+    Array.from(ul.children)
+        .filter((todo => !todo.textContent.includes(term)))
+        .forEach((todo) => todo.classList.add('filtered'));
+     Array.from(ul.children)
+        .filter((todo => todo.textContent.includes(term)))
+        .forEach((todo) => todo.classList.remove('filtered'));    
+};
+
+
+search.addEventListener('keyup', () => {
+    const term = search.value.trim();
+    filterTodos(term);
+});
